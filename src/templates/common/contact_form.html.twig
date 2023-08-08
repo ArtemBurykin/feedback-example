@@ -1,0 +1,17 @@
+<div class="contact-form {{ formClass }}" id="{{ formId }}">
+    <h2 class="contact-form__header">Order the tour or ask a question</h2>
+
+    <input type="hidden" name="_token" value="{{ csrf_token('contact-form') }}"/>
+
+    <label for="email" class="contact-form__label">Your email:</label>
+    <input class="contact-form__field" type="email" id="email" name="email">
+
+    <label for="theme" class="contact-form__label">Theme</label>
+    <input class="contact-form__field" type="text" id="theme" name="theme">
+
+    <label for="message" class="contact-form__label">Message</label>
+    <textarea class="contact-form__field contact-form__field--textarea" id="message" name="message" rows="4" cols="50"></textarea>
+
+    <button class="contact-form__btn" id="{{ formId }}-submit">Send message</button>
+    <p class="contact-form__status" id="{{ formId }}-status"></p>
+</div>

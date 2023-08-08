@@ -1,0 +1,38 @@
+.contact-form__header {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1.2rem;
+}
+
+.contact-form__label {
+    display: block;
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 1rem;
+}
+
+.contact-form__field {
+    border-radius: 6px;
+    height: 34px;
+    border: 1px solid gray;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.contact-form__field--textarea {
+    height: 100px;
+}
+
+.contact-form__btn {
+    background: blue;
+    font-family: Verdana, Arial, sans-serif;
+    color: white;
+    border: 1px solid blue;
+    border-radius: 6px;
+    cursor: pointer;
+    height: 40px;
+    font-size: 1rem;
+    display: block;
+}
+
+.contact-form__field--error {
+    border: 1px solid red;
+}
