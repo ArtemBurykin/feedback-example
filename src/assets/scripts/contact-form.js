@@ -29,11 +29,11 @@ export const contactForm = function(formId, baseClass) {
 
     const isFieldValid = (field) => {
         return validatorMap[field.name](field.value);
-    }
+    };
 
     const toggleErrorClassIfFieldIsValid = (field) => {
         field.classList.toggle(`${baseClass}__field--error`, !isFieldValid(field));
-    }
+    };
 
     const submitForm = async () => {
         const allFormFields = Array.from(form.querySelectorAll('input, textarea'));
@@ -51,8 +51,14 @@ export const contactForm = function(formId, baseClass) {
         });
 
         if (!res.ok) {
-            const error =  await res.json();
-            statusLabel.innerText = error.message || 'An error occurred';
+            const genericError = 'An error occurred';
+
+            res.json()
+                .then((error) => {
+                    statusLabel.innerText = error.message || genericError;
+                }).catch(() => {
+                    statusLabel.innerText = genericError;
+                });
         } else {
             const dataFormFields = Array.from(form.querySelectorAll(`.${baseClass}__field`));
             dataFormFields.forEach((field) => field.value = '');
@@ -60,7 +66,7 @@ export const contactForm = function(formId, baseClass) {
         }
 
         setTimeout(() => statusLabel.innerText = '', 2000);
-    }
+    };
 
     submitBtn.addEventListener('click', async () => {
         const fields = Array.from(form.querySelectorAll('input, textarea'));

@@ -1,12 +1,12 @@
 /**
  *  @jest-environment jsdom
  */
-import {contactForm} from "./contact-form.js";
+import {contactForm} from './contact-form.js';
 
 describe('contactForm', () => {
     const apiUrl = '/api/contact-us';
     const csrfToken = 'a_secret_token';
-    const formId = 'form-id'
+    const formId = 'form-id';
     const baseClass = 'contact-form';
     const errorClass = `${baseClass}__field--error`;
 
@@ -15,7 +15,7 @@ describe('contactForm', () => {
         emailField.value = email;
         emailField.dispatchEvent(new Event('change'));
 
-        const themeField= document.querySelector(`.${baseClass}__field[name="theme"]`);
+        const themeField = document.querySelector(`.${baseClass}__field[name="theme"]`);
         themeField.value = theme;
         themeField.dispatchEvent(new Event('change'));
 
@@ -132,7 +132,26 @@ describe('contactForm', () => {
     test('error: but not correct object, should show the general description', (done) => {
         global.fetch = jest.fn(() =>
             Promise.resolve({
-                json: () => Promise.resolve('The process failed'),
+                json: () => Promise.reject('Not correct JSON'),
+                ok: false
+            })
+        );
+
+        fillFields({ email: 'test@gmail.com', theme: 'a theme', message: 'a message' });
+
+        document.querySelector(`#${formId}-submit`).click();
+
+        setTimeout(() => {
+            expect(document.querySelector(`#${formId}-status`).innerText).toBe('An error occurred');
+
+            done();
+        }, 0);
+    });
+
+    test('error: object without message, should show the general description', (done) => {
+        global.fetch = jest.fn(() =>
+            Promise.resolve({
+                json: () => Promise.resolve({}),
                 ok: false
             })
         );
@@ -167,7 +186,7 @@ describe('contactForm', () => {
             ).toBe(true);
 
             expect(
-               document.querySelector(`.${baseClass}__field[name="message"]`).classList.contains(errorClass)
+                document.querySelector(`.${baseClass}__field[name="message"]`).classList.contains(errorClass)
             ).toBe(true);
 
             done();
@@ -193,7 +212,7 @@ describe('contactForm', () => {
             ).toBe(false);
 
             expect(
-               document.querySelector(`.${baseClass}__field[name="message"]`).classList.contains(errorClass)
+                document.querySelector(`.${baseClass}__field[name="message"]`).classList.contains(errorClass)
             ).toBe(false);
 
             done();
